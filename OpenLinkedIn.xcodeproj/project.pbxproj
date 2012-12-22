@@ -13,6 +13,8 @@
 		C01201CB1685DF010097E6EA /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = C01201C91685DF010097E6EA /* Credits.rtf */; };
 		C01201CE1685DF010097E6EA /* BSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C01201CD1685DF010097E6EA /* BSAppDelegate.m */; };
 		C01201D11685DF020097E6EA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01201CF1685DF020097E6EA /* MainMenu.xib */; };
+		C01201FA1685F9C00097E6EA /* LinkedInURLLogo.iconset in Resources */ = {isa = PBXBuildFile; fileRef = C01201F91685F9C00097E6EA /* LinkedInURLLogo.iconset */; };
+		C070B78F1686049B0020A82A /* OpenLinkedIn.iconset in Resources */ = {isa = PBXBuildFile; fileRef = C070B78E1686049B0020A82A /* OpenLinkedIn.iconset */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,9 @@
 		C01201CC1685DF010097E6EA /* BSAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSAppDelegate.h; sourceTree = "<group>"; };
 		C01201CD1685DF010097E6EA /* BSAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSAppDelegate.m; sourceTree = "<group>"; };
 		C01201D01685DF020097E6EA /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		C01201D71685DF4F0097E6EA /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		C01201F91685F9C00097E6EA /* LinkedInURLLogo.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = LinkedInURLLogo.iconset; sourceTree = "<group>"; };
+		C070B78E1686049B0020A82A /* OpenLinkedIn.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = OpenLinkedIn.iconset; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +51,7 @@
 		C01201AB1685DF010097E6EA = {
 			isa = PBXGroup;
 			children = (
+				C01201D71685DF4F0097E6EA /* WebKit.framework */,
 				C01201C01685DF010097E6EA /* OpenLinkedIn */,
 				C01201B91685DF010097E6EA /* Frameworks */,
 				C01201B71685DF010097E6EA /* Products */,
@@ -82,6 +88,7 @@
 		C01201C01685DF010097E6EA /* OpenLinkedIn */ = {
 			isa = PBXGroup;
 			children = (
+				C01201F61685F93D0097E6EA /* Images */,
 				C01201CC1685DF010097E6EA /* BSAppDelegate.h */,
 				C01201CD1685DF010097E6EA /* BSAppDelegate.m */,
 				C01201CF1685DF020097E6EA /* MainMenu.xib */,
@@ -100,6 +107,15 @@
 				C01201C91685DF010097E6EA /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C01201F61685F93D0097E6EA /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				C070B78E1686049B0020A82A /* OpenLinkedIn.iconset */,
+				C01201F91685F9C00097E6EA /* LinkedInURLLogo.iconset */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,6 +173,8 @@
 				C01201C51685DF010097E6EA /* InfoPlist.strings in Resources */,
 				C01201CB1685DF010097E6EA /* Credits.rtf in Resources */,
 				C01201D11685DF020097E6EA /* MainMenu.xib in Resources */,
+				C01201FA1685F9C00097E6EA /* LinkedInURLLogo.iconset in Resources */,
+				C070B78F1686049B0020A82A /* OpenLinkedIn.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +276,7 @@
 		C01201D51685DF020097E6EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenLinkedIn/OpenLinkedIn-Prefix.pch";
@@ -270,6 +289,7 @@
 		C01201D61685DF020097E6EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OpenLinkedIn/OpenLinkedIn-Prefix.pch";
@@ -298,6 +318,7 @@
 				C01201D61685DF020097E6EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
