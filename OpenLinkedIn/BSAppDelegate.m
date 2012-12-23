@@ -51,7 +51,6 @@ NSString* const BSAppDelegateQuitNofification = @"com.basilsalad.BSAppDelegateQu
         if (numberOfRanges == 2) {
             NSRange range = [result rangeAtIndex:1];
             NSString* profileIDString = [urlString substringWithRange:range];
-            
             NSString* profileURLString = [NSString stringWithFormat:@"http://www.linkedin.com/profile/view?id=%@",profileIDString];
             if([[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:profileURLString]]) {
                 NSNotification* quitNotification = [NSNotification notificationWithName:BSAppDelegateQuitNofification object:self];
