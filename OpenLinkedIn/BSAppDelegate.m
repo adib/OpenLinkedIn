@@ -19,15 +19,22 @@
 
 #import "BSAppDelegate.h"
 
-NSString* const BSAppDelegateQuitNofification = @"com.basilsalad.BSAppDelegateQuitNofification";
+const NSTimeInterval BSApplicationLingerInterval = 10;
+const NSTimeInterval BSApplicationLingerTolerance = 2;
+
+@interface BSAppDelegate ()
+
+@property (nonatomic,weak,readonly) NSTimer* quitTimer;
+
+@end
 
 @implementation BSAppDelegate
 
--(void) handleQuitNotification:(NSNotification*) notification
+
+-(void) shouldQuit:(NSTimer*) timer
 {
     [[NSApplication sharedApplication] terminate:self];
 }
-
 
 +(NSRegularExpression*) profileStringRegularExpression
 {
@@ -40,11 +47,14 @@ NSString* const BSAppDelegateQuitNofification = @"com.basilsalad.BSAppDelegateQu
     return regex;
 }
 
-
 - (void)handleURLEvent:(NSAppleEventDescriptor *)event withReplyEvent: (NSAppleEventDescriptor *)replyEvent
 {
+    [_quitTimer invalidate];
+    _quitTimer = nil;
+
+    BOOL __block urlOpened = NO;
+    NSWorkspace* workspace = [NSWorkspace sharedWorkspace];
     NSString* urlString = [[event paramDescriptorForKeyword:keyDirectObject] stringValue];
-    
     NSRegularExpression* regex = [[self class] profileStringRegularExpression];
     [regex enumerateMatchesInString:urlString options:0 range:NSMakeRange(0, urlString.length) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         NSUInteger numberOfRanges = result.numberOfRanges;
@@ -52,24 +62,45 @@ NSString* const BSAppDelegateQuitNofification = @"com.basilsalad.BSAppDelegateQu
             NSRange range = [result rangeAtIndex:1];
             NSString* profileIDString = [urlString substringWithRange:range];
             NSString* profileURLString = [NSString stringWithFormat:@"http://www.linkedin.com/profile/view?id=%@",profileIDString];
-            if([[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:profileURLString]]) {
-                NSNotification* quitNotification = [NSNotification notificationWithName:BSAppDelegateQuitNofification object:self];
-                [[NSNotificationQueue defaultQueue] enqueueNotification:quitNotification postingStyle:NSPostWhenIdle coalesceMask:NSNotificationCoalescingOnName forModes:nil];
+            if([workspace openURL:[NSURL URLWithString:profileURLString]]) {
+                urlOpened = YES;
             }
         }
     }];
+    if (urlOpened) {
+        [self quitTimer];
+    }
 }
 
 
+#pragma mark Property Access
+
+@synthesize quitTimer = _quitTimer;
+
+-(NSTimer *)quitTimer
+{
+    if (!_quitTimer) {
+        NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:BSApplicationLingerInterval target:self selector:@selector(shouldQuit:) userInfo:nil repeats:NO];
+        timer.tolerance = BSApplicationLingerTolerance;
+        _quitTimer = timer;
+    }
+    return _quitTimer;
+}
+
 #pragma mark NSApplicationDelegate
+
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     NSAppleEventManager* appleEventManager = [NSAppleEventManager sharedAppleEventManager];
     [appleEventManager setEventHandler:self andSelector:@selector(handleURLEvent:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleQuitNotification:) name:BSAppDelegateQuitNofification object:self];
+    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+        [self quitTimer];
+    }];
 }
+
+
 
 
 
